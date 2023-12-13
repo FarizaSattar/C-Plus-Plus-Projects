@@ -1,5 +1,4 @@
 // Asset Tracker
-
 /* The code allows the user to track assets. */
 
 #include <iostream>
@@ -17,26 +16,29 @@ private:
   string location;
 
 public:
+  // Constructor for Asset class
   Asset(string assetName, string assetId, string assetLocation)
       : name(assetName), id(assetId), location(assetLocation) {}
 
+  // Getter functions for asset details
   string getName() const { return name; }
-
   string getID() const { return id; }
-
   string getLocation() const { return location; }
 
+  // Setter function for updating asset location
   void setLocation(string newLocation) { location = newLocation; }
 };
 
 // AssetTracker class managing a collection of assets
 class AssetTracker {
 private:
-  vector<Asset> assets;
+  vector<Asset> assets; // Vector to store assets
 
 public:
+  // Function to add a new asset to the tracker
   void addAsset(const Asset &newAsset) { assets.push_back(newAsset); }
 
+  // Function to get an asset by its ID
   Asset *getAssetByID(const string &assetID) {
     for (auto &asset : assets) {
       if (asset.getID() == assetID) {
@@ -46,6 +48,7 @@ public:
     return nullptr;
   }
 
+  // Function to update the location of a specific asset
   bool updateAssetLocation(const string &assetID, string newLocation) {
     Asset *asset = getAssetByID(assetID);
     if (asset != nullptr) {
@@ -55,6 +58,7 @@ public:
     return false;
   }
 
+  // Function to display all assets in the tracker
   void displayAllAssets() const {
     cout << "Assets in the tracker:" << endl;
     for (const auto &asset : assets) {
@@ -65,8 +69,9 @@ public:
 };
 
 int main() {
-  AssetTracker tracker;
+  AssetTracker tracker; // Create an instance of AssetTracker
 
+  // Creating three initial assets and adding them to the tracker
   Asset asset1("Laptop", "ADV80106", "EC1 - 2213M");
   Asset asset2("Laptop", "ADV201203", "EC1 - 2244C");
   Asset asset3("Laptop", "ADV220203", "EC1 - 2219H");
@@ -77,6 +82,7 @@ int main() {
 
   int choice;
   do {
+    // Displaying menu options
     cout << "\nMenu:\n";
     cout << "1. Display all assets\n";
     cout << "2. Update asset location\n";
@@ -84,6 +90,7 @@ int main() {
     cout << "4. Exit\n";
     cout << "Enter your choice: ";
 
+    // Handling invalid input
     while (!(cin >> choice)) {
       cin.clear();
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -104,6 +111,7 @@ int main() {
       cin.ignore();
       getline(cin, newLocation);
 
+      // Updating asset location and providing feedback
       if (tracker.updateAssetLocation(assetID, newLocation)) {
         cout << "Asset location updated successfully.\n";
       } else {
@@ -125,6 +133,7 @@ int main() {
       cin.ignore();
       getline(cin, assetLocation);
 
+      // Adding a new asset and confirming its addition
       Asset newAsset(assetName, assetID, assetLocation);
       tracker.addAsset(newAsset);
       cout << "Asset added successfully.\n";
